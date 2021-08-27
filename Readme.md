@@ -8,3 +8,5 @@ YTskip adds hotkeys on YouTube to seek by 1 second. I was missing this functiona
 - Click `Raw` button at the top right corner
 - Click `Install`
 - Use <KBD>Ctrl</KBD>+<KBD>🠊</KBD> and <KBD>Ctrl</KBD>+<KBD>🠈</KBD> keys to seek by 1 second.
+
+## Issue: navigating from the home page won't activate the script, workaround is to reload the page.
