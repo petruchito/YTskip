@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YTskip
 // @namespace    https://github.com/petruchito/YTskip
-// @version      0.1
+// @version      0.2
 // @description  Ctrl-arrows to skip 1 sec
 // @author       petruchito <freeglider@gmail.com>
 // @match        https://www.youtube.com/watch*
@@ -10,18 +10,12 @@
 // ==/UserScript==
 
 
-'use strict';
-function exec(fn) {
-    var script = document.createElement('script');
-    script.setAttribute("type", "application/javascript");
-    script.textContent = '(' + fn + ')();';
-    document.body.appendChild(script); // run the script
-    document.body.removeChild(script); // clean up
-}
+document.addEventListener('yt-navigate-finish',onNavigate);
+var v_forward_listener, v_backward_listener;
 
-window.addEventListener("load", function() {
-    // script injection
-    exec(function() {
+function onNavigate() {
+    if (window.location.toString().match(/\/watch/)) {
+
         var V_YOUTUBE_PLAYER = document.querySelector('ytd-player').getPlayer();
         var V_SECONDS = 1;
         try {
@@ -29,19 +23,29 @@ window.addEventListener("load", function() {
             window.removeEventListener('keydown', v_forward_listener);
         } catch (e) {}
 
-        var v_backward_listener = function(e) {
-            if (e.keyCode === 37 && e.ctrlKey) {
+        v_backward_listener = function(e) {
+            if (e.key === ',' && e.ctrlKey) {
                 V_YOUTUBE_PLAYER.seekBy(-V_SECONDS);
             }
         }
 
-        var v_forward_listener = function(e) {
-            if (e.keyCode === 39 && e.ctrlKey) {
+        v_forward_listener = function(e) {
+            if (e.key === '.' && e.ctrlKey) {
                 V_YOUTUBE_PLAYER.seekBy(V_SECONDS);
             }
         }
 
         window.addEventListener('keydown', v_backward_listener);
         window.addEventListener('keydown', v_forward_listener);
-    });
-}, false);
+
+    } else {
+
+        if (v_forward_listener) {
+            window.removeEventListener('keydown', v_backward_listener);
+            window.removeEventListener('keydown', v_forward_listener);
+            v_forward_listener = null;
+            v_backward_listener = null;
+        }
+
+    }
+}
