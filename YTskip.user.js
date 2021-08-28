@@ -4,7 +4,7 @@
 // @version      0.2
 // @description  Ctrl-arrows to skip 1 sec
 // @author       petruchito <freeglider@gmail.com>
-// @match        https://www.youtube.com/watch*
+// @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?domain=youtube.com
 // @grant        none
 // ==/UserScript==
