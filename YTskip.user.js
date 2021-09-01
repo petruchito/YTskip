@@ -9,43 +9,35 @@
 // @grant        none
 // ==/UserScript==
 
+const V_SECONDS = 1;
 
 document.addEventListener('yt-navigate-finish',onNavigate);
-var v_forward_listener, v_backward_listener;
+var onKeyDown;
 
 function onNavigate() {
-    if (window.location.toString().match(/\/watch/)) {
+  if (window.location.toString().match(/\/watch/)) {
 
-        var V_YOUTUBE_PLAYER = document.querySelector('ytd-player').getPlayer();
-        var V_SECONDS = 1;
-        try {
-            window.removeEventListener('keydown', v_backward_listener);
-            window.removeEventListener('keydown', v_forward_listener);
-        } catch (e) {}
+    var V_YOUTUBE_PLAYER = document.querySelector('ytd-player').getPlayer();
+    try {
+      window.removeEventListener('keydown', onKeyDown);
+    } catch (e) {}
 
-        v_backward_listener = function(e) {
-            if (e.key === ',' && e.ctrlKey) {
-                V_YOUTUBE_PLAYER.seekBy(-V_SECONDS);
-            }
-        }
-
-        v_forward_listener = function(e) {
-            if (e.key === '.' && e.ctrlKey) {
-                V_YOUTUBE_PLAYER.seekBy(V_SECONDS);
-            }
-        }
-
-        window.addEventListener('keydown', v_backward_listener);
-        window.addEventListener('keydown', v_forward_listener);
-
-    } else {
-
-        if (v_forward_listener) {
-            window.removeEventListener('keydown', v_backward_listener);
-            window.removeEventListener('keydown', v_forward_listener);
-            v_forward_listener = null;
-            v_backward_listener = null;
-        }
-
+    onKeyDown = function(e) {
+      if (e.key === ',' && e.ctrlKey) {
+        V_YOUTUBE_PLAYER.seekBy(-V_SECONDS);
+      } else if (e.key === '.' && e.ctrlKey) {
+        V_YOUTUBE_PLAYER.seekBy(V_SECONDS);
+      }
     }
+
+    window.addEventListener('keydown', onKeyDown);
+
+  } else {
+
+    if (onKeyDown) {
+      window.removeEventListener('keydown', onKeyDown);
+      onKeyDown = null;
+    }
+
+  }
 }
