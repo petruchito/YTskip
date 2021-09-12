@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         YTskip
 // @namespace    https://github.com/petruchito/YTskip
-// @version      0.3
+// @version      0.4
+// @updateURL	 https://github.com/petruchito/YTskip/raw/main/YTskip.user.js
+// @downloadURL	 https://github.com/petruchito/YTskip/raw/main/YTskip.user.js
 // @description  Ctrl-,. to skip 1 sec
 // @author       petruchito <freeglider@gmail.com>
 // @match        https://www.youtube.com/*
