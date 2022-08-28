@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YTskip
 // @namespace    https://github.com/petruchito/YTskip
-// @version      0.4
+// @version      0.5
 // @updateURL	 https://github.com/petruchito/YTskip/raw/main/YTskip.user.js
 // @downloadURL	 https://github.com/petruchito/YTskip/raw/main/YTskip.user.js
 // @description  Ctrl-,. to skip 1 sec
@@ -19,7 +19,8 @@ var onKeyDown;
 function onNavigate() {
   if (window.location.toString().match(/\/watch/)) {
 
-    var V_YOUTUBE_PLAYER = document.querySelector('ytd-player').getPlayer();
+    var V_YOUTUBE_PLAYER = null;
+    document.querySelector('ytd-player').getPlayerPromise().then(function(p) {V_YOUTUBE_PLAYER = p});
     try {
       window.removeEventListener('keydown', onKeyDown);
     } catch (e) {}
